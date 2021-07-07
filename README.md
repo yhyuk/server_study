@@ -1,1 +1,1 @@
-# server_study
+# Server 수업 자료
