@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>ServletTest</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- <servlet>
+  	<servlet-name>hello</servlet-name>
+  	<servlet-class>com.test.servlet.Hello</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>hello</servlet-name>
+  	<url-pattern>/hello.do</url-pattern>
+  </servlet-mapping> -->
+  
+  <!-- <servlet>
+  	<servlet-name>Hello</servlet-name>
+  	<servlet-class>com.test.servlet.Hello</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>Hello</servlet-name>
+  	가상 주소(실제로 존재하는 자원의 주소가 아니라 개발자가 임의로 만들어낸 주소)
+  	<url-pattern>/hello.do</url-pattern>
+  </servlet-mapping>
+   -->
+   
+   <servlet>
+   	<servlet-name>Ex02</servlet-name>
+   	<servlet-class>com.test.servlet.Ex02_Gugudan</servlet-class>
+   </servlet>
+   
+   <servlet-mapping>
+   		<servlet-name>Ex02</servlet-name>
+   		<url-pattern>/gugudan.do</url-pattern>
+   </servlet-mapping>
+   
+   
+   <!-- Ex03_Send 가상주소 -->
+   <servlet>
+	   	<servlet-name>Ex03</servlet-name>
+	   	<servlet-class>com.test.servlet.Ex03_Send</servlet-class>
+   </servlet>
+   
+   <servlet-mapping>
+   		<servlet-name>Ex03</servlet-name>
+   		<url-pattern>/ex03_send.do</url-pattern>
+   </servlet-mapping>
+
+	<!-- Ex03_Receive 가상주소 -->
+   	<servlet>
+	   	<servlet-name>Ex03r</servlet-name>
+	   	<servlet-class>com.test.servlet.Ex03_Receive</servlet-class>
+   </servlet>
+   
+   <servlet-mapping>
+   		<servlet-name>Ex03r</servlet-name>
+   		<url-pattern>/ex03_receive.do</url-pattern>
+   </servlet-mapping>
+   
+   <!-- Ex04 가상주소 -->
+   <servlet>
+	   	<servlet-name>Ex04</servlet-name>
+	   	<servlet-class>com.test.servlet.Ex04</servlet-class>
+   </servlet>
+   
+   <servlet-mapping>
+   		<servlet-name>Ex04</servlet-name>
+   		<url-pattern>/ex04.do</url-pattern>
+   </servlet-mapping>
+   
+   
+</web-app>

@@ -1,0 +1,165 @@
+Dynamic Web Project 구조
+
+	1. JAX-WS Web Services : 사용안함
+	2. Java Resources (******************)
+		- 자바 파일을 저장하는 폴더(*.java)
+		- src: 패키지 + 소스 파일
+	3. JavaScript Resources : 사용 안함 
+	4. build : 사용 안함
+	5. WebContent (************)
+		- 브라우저를 통해서 요청하는 모든 리소스의 루트 폴더
+		- *.html, *.css, *.js, 이미지, 동영상 등..
+		- META-INF : 사용안함
+		- WEB-INF : 서버 결과가 관련된 파일을 저장(외부에서 접근이 불가능하다. 보안상의 이유로..)
+			a. lib : *.jar 저장 폴더(콘솔 프로젝트의 Build Path와 동일한 역할)
+			b. web.xml : 서버를 운영하는데 관련한 설정을 저장하는 XML 파일 
+			
+	--> 개발자(우리)가 주로 쓰는것은 Java Resources, WebContent이다. 나머지는 X
+
+	[ Hello.Java ]
+	- Hello 자바 클래스를 사용해서 브라우저가 보게될 HTML 페이지를 동적(*******)으로 만들었다.
+	- Servlet이라는 기술을 사용했다. > 서블릿은 동적으로 웹페이지를 만드는 기술이다.
+
+
+	[ 이전까지 수업 (*.html) ]
+	- 정적 웹사이트 -> Static Web Project
+	- 홍길동 > 카페 > 주문 > 기성품(캔커피) > 바로 수령 : 미리 제품을 만들어 놓음
+
+ 	[ 이후 부터 수업 ]
+	- 동적 웹사이트 -> Dynamic Web Project
+	- 홍길동 > 카페 > 주문(에스프레소3컵, 시럽X, 우유(저지방) 빈컵..) > 바리스타(알바생) > 제작(***) > 완료 > 수령
+
+
+
+
+	[ Servlet, 서블릿 ]
+	- (서버측) 기술, Server-side Programming
+	- 자바를 사용해서 동적으로 웹페이지를 만드는 기술
+	- 자바 진영에서 처음으로 시도한 웹 서버 기술
+	- Server + Applet 합성어
+
+
+	[ 서버측 기술 ]
+	1. CGI, Common Gateway Interface
+		- 브라우저와 웹서버간의 정보(데이터)를 주고 받는 규약
+		- CGI 구현 언어 > C언어
+		- 서블릿이 자바를 사용해서 CGI를 구현해놓은 기술 중 하나
+		
+	2. PHP, Personal HyperText Preprocessor
+		- C 기반 스크립트 언어
+		- 개인 사이트 제작용 (기업용으로 많이 사용)
+		
+	3. ASP, Active Server Page
+		- PHP 유사
+		- MS 스크립트 언어(VBScript)
+		
+	4. ASP.NET
+		- ASP의 버전업
+		- C# 사용(VB.NET)
+		- 현역
+		
+	5. JSP, Java Server Page
+		- MS ASP의 자바 버전
+		- Java 사용
+		
+	6. Ruby on Rails
+		- 일본 기술
+		
+	7. Node.js
+		- ****
+		- 웹서버 제작용 자바스크립트
+		
+	8. Python
+		- 파이썬(빅데이터, AI)
+		- Django(웹 프레임워크)
+		
+	9. Spring
+		- 자바 Servlet + JSP > 버전업
+		- 자바 기반 웹 프레임워크
+
+
+
+	[ Servlet Class, 서블릿 클래스 ] -> 위 예시의 바리스타(알바생) 역할
+	- 방금 테스트로 만든 Hello.java
+	- 순수 자바 클래스를 기반으로 웹 어플리케이션(웹사이트, 웹페이지)를 제작하는 기능을 추가한 클래스
+
+	[ Servlet Class 작성 규칙 ]
+	- 해당 규칙을 준수하여 클래스를 작성해야만 서블릿 클래스의 역할을 할 수 있고
+	WAS에 의해서 관리/운영 될 수 있다.
+
+	1. 서블릿 클래스 선언
+		방법1. javax.servlet.Servlet 인터페이스를 구현한다.(복잡함) -> 잘 사용 안함
+		방법2. javax.servlet.HttpServlet 클래스를 상속한다.(간편함) -> 주로 사용함
+		--> 두 방법중 하나만 쓰면 된다.
+		
+	2. doGet/doPost 메소드 선언
+		- 둘 중 하나 or 둘 다 선언 필요
+		- 둘 중 하나라도 없으면 서블릿이 아니다.(알바생 X)
+		- 클라이언트(브라우저)의 요청이 들어오면, 서버측에서 자동으로 이 메소드가 실행된다. (일종의 이벤트 메소드 or 콜백 메소드)
+		- 동적으로 HTML 페이지를 생성하는 역할의 메소드(*************)
+		- 바리스타(알바생)로 따지면 커피를 만드는 일
+		- 앞으로 코딩은 여기서 한다고 생각하면됨.
+		- 메소드 작성 규칙
+			a. 매개 변수 작성(2개 필요)
+				1) javax.servlet.http.HttpServletRequest
+				2) javax.servlet.http.HttpServletResponse
+			b. 예외 미루기(2개 필요)
+				1) java.io.IOException : 페이지를 동적으로 만드는 작업(외부 입출력 발생)
+				2) javax.servlet.ServletException : 서블릿과 관련 예외 처리
+		
+	3. 동적 HTML 문서 작성 구현
+		a. HttpServletResponse 객체의 getWriter() 메소드 호출 > PrintWriter 객체 반환
+		b. PrintWriter 객체의 printXXX(), write() 등의 메소드를 보유
+			> 이 메소드를 사용해서 브라우저에게 돌려줄 HTML 페이지 소스를 작성합니다.
+		c. PrintWriter의 작성 내용이 브라우저에게 돌려줄 페이지 소스가 된다.
+			
+	4. 가상 주소 매핑
+		- http://localhost:8090/ServletTest/servlet/com.test.servlet.Hello
+		- 자바 파일(*.java)은 웹에서 사용하는 용도의 파일이 아니다.
+		- 브라우저를 통해서 자바 파일을 실행할 수 없다.(****)
+		- 브라우저가 자바 파일을 직접 호출할 수 있도록 가상 주소를 만들어서 서로 연결해야 한다. (*****)
+		- 톰캣(웹서버)에게 설정한다. > web.xml(Deployment Descriptor, 배포 서술자)
+	
+	
+
+	페이지 2장
+		- A페이지, B페이지
+		- A페이지 -> 사용자 키도 입력 > (전송) > B페이지 > 데이터 수집 + 가공 + 화면 출력
+		- 데이터 주고 받기 ****************
+		데이터를 입력받아 전송하는 알바생: Ex03.Seend.java 서블릿 > "/ex03_send.do"
+		데이터를 수신해서 처리하는 알바생: Ex03_receive.java 서블릿 > "/ex03_receive.do"
+ 
+	
+	
+	[ 서버 수업 ]
+	
+	1. Servlet
+		- 오늘 수업, 1세대 기술
+		- 클라이언트 작성 환경 불편
+		- 여러 문제점
+		
+	2. JSP
+		- 2세대 기술
+		- Servlet 계승 + Servlet 문제점 개선
+		- but...여러 문제점 
+		- 서버 기본 개념 + 기능 수업 
+	
+	3. Servlet + JSP
+		- 1세대 기술 + 2세대 기술
+		- 서로 단점을 보완해서 안정성 향상
+		- 전성기
+		- 이 파트를 중심으로 수업
+		- 응용
+		
+	---------------------------------------------------------------	
+	
+	4. Spring
+	
+	
+
+
+
+
+
+	
+	
