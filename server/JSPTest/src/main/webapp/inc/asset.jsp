@@ -2,6 +2,6 @@
     pageEncoding="UTF-8"%>
 
 <!-- /inc/asset.jsp -->
-<link rel="stylesheet" href="/jsp/asset/css/bootstrap.css" />
-<script src="/jsp/asset/js/jquery-3.6.0.js"></script>
-<script src="/jsp/asset/js/bootstrap.js"></script>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/asset/css/bootstrap.css" />
+<script src="<%= request.getContextPath() %>/asset/js/jquery-3.6.0.js"></script>
+<script src="<%= request.getContextPath() %>/asset/js/bootstrap.js"></script>
