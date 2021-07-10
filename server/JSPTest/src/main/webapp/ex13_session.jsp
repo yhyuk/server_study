@@ -43,7 +43,7 @@
 		
 		<div>count: <%= session.getAttribute("count") %></div>
 		
-				<%
+		<%
 			if (application.getAttribute("count") == null) {
 				application.setAttribute("count", 0);
 			} else {
