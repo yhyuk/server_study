@@ -18,7 +18,7 @@
 
 	
 	// 페이지 접속하자마자 바로 ex09_response_two.jsp 페이지로 이동
-	// response.sendRedirect("ex09_response_two.jsp");
+	response.sendRedirect("ex09_response_two.jsp");
 
 %>
 
@@ -44,7 +44,7 @@
 	<script>
 		
 		// 페이지 접속하자마자 바로 ex09_response_two.jsp 페이지로 이동
-		location.href = "ex09_response_two.jsp";
+		// location.href = "ex09_response_two.jsp";
 		
 	</script>
 </body>

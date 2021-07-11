@@ -21,7 +21,7 @@
 <body>
 	<!-- ex12_session.jsp -->
 	<div class="container">
-		<h1 class="page-header">Session vs Application</h1>
+		<h1 class="page-header">첫번째 페이지</h1>
 		
 		<%
 			// session
@@ -41,10 +41,10 @@
 			application.setAttribute("num4", 40);
 		%>	
 		
-		<div>num1: <%= pageContext.getAttribute("num1") %></div>
-		<div>num2: <%= request.getAttribute("num2") %></div>
-		<div>num3: <%= session.getAttribute("num3") %></div>
-		<div>num4: <%= application.getAttribute("num4") %></div>
+		<div>pageContext: <%= pageContext.getAttribute("num1") %></div>
+		<div>request: <%= request.getAttribute("num2") %></div>
+		<div>session: <%= session.getAttribute("num3") %></div>
+		<div>application: <%= application.getAttribute("num4") %></div>
 		
 		<hr />
 		

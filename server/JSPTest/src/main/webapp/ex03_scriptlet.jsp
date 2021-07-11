@@ -28,7 +28,7 @@
 <body>
 	<!-- ex03_scriptlet.jsp -->
 	
-	<h1>표현식</h1>
+	<h1>Scriptlet</h1>
 	
 	<div><%= 100 %></div>
 	<div><%= 3.14 %></div>
@@ -43,13 +43,13 @@
 	<div>a: <%= a %></div>
 	<div>a + b: <%= a + b %></div>
 	
-	<hr>
+<%-- 	<hr>
 	<div style="font-size:<%= c %>px;">ㅎㅇ요</div>
 	
 	<hr>
-	<input type="button" value="버튼" id="btn1">
+	<input type="button" value="버튼" id="btn1"> --%>
 	
-	<script>
+<%-- 	<script>
 	
 		document.getElementById('btn1').onclick = function() {
 			// alert(div 태그의 글자색);
@@ -57,7 +57,7 @@
 			alert("<%= color %>");
 		};
 	
-	</script>
+	</script> --%>
 </body>
 </html>
 

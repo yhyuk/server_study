@@ -12,7 +12,7 @@
 	
 	// 지역 변수
 	// 	- 현재 JSP 페이지에서만 사용 가능한 변수
-	int num = 100; // 이 변수를 two.jsp에게 전달하려면...??
+	int num1 = 100; // 이 변수를 two.jsp에게 전달하려면...??
 	int num2 = 200;		
 	
 	// A 페이지 -> (데이터 전달) -> B 페이지 하고싶을 때..
@@ -49,7 +49,7 @@
 		<h1 class="page-header">첫번째 페이지</h1>
 		
 		<form method="GET" action="ex10_pagecontext_two.jsp">
-			<input type="text" name="num" value="<%= num %>" />
+			<input type="text" name="num1" value="<%= num1 %>" />
 			<input type="submit" value="보내기" />
 		</form>	
 	

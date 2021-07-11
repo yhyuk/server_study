@@ -40,7 +40,7 @@
 		
 		<%
 			// response.sendRedirect("ex13_two.jsp");
-			pageContext.forward("ex13_two.jsp");
+			// pageContext.forward("ex13_two.jsp");
 		
 		%>
 
