@@ -1,0 +1,91 @@
+
+	JDBC, Java Database Connectivity
+	- 자바(응용 프로그램)와 오라클(데이터베이스)간의 연결 시켜주는 기술
+	- 중간 계층
+	- 자바 프로그램 <-> 오라클: 직접 연결 
+		a. 강한 결합
+		b. 전용 API 사용
+		c. 난이도 높음
+	- 자바 프로그램 <-> JDBC <-> 오라클
+		a. 간접 연결
+		b. 악한 결합
+		c. 범용 API 사용
+		d. 난이도 낮음(코드가 쉽다)
+	
+	
+	select * from employees; 실행
+	
+	[ SQL Developer ]
+	1. SQL Developer 실행
+	2. 오라클 접속
+		2-1 호스트명: 서버IP or 도메인주소
+		2-2 포트번호: 1521
+		2-3 SID: xe
+		2-4 드라이버: thin
+		2-5 사용자명: hr
+		2-6 암호: java1234
+	3. 질의(***)
+		3-1 SQL사용
+		3-2 반환값이 있는 쿼리 
+			- select
+			- 결과셋 -> 업무에 사용
+		3-3 반환값이 없는 쿼리 
+			- select 빼고 전부
+			
+	4. 오라클 접속 종료
+		4-1 commit or rollback
+		4-2 접속 종료
+		
+		
+	--------------------------------------------------------------------
+	
+	
+	select * from employees; 실행
+	
+	[ Java ]
+	1. 응용 프로그램(Java) 실행
+	
+	2. 오라클 접속( 자바(JDBC)를 사용해서 오라클 접속 )
+		- Connection 클래스 사용(JDBC 클래스)
+		
+		2-1 호스트명: 서버IP or 도메인주소
+		2-2 포트번호: 1521
+		2-3 SID: xe
+		2-4 드라이버: thin
+		2-5 사용자명: hr
+		2-6 암호: java1234
+		
+	3. 질의(***)
+		- Statment 클래스 사용
+		
+		3-1 SQL사용
+		3-2 반환값이 있는 쿼리 
+			- ResultSet 클래스 사용
+			- select
+			- 결과셋 -> 업무에 사용
+		3-3 반환값이 없는 쿼리 
+			- select 빼고 전부
+			
+	4. 오라클 접속 종료
+		- Connection 클래스 사용
+	
+		4-1 commit or rollback
+		4-2 접속 종료
+		
+	JDBC 설치
+	- WEB-INF > lib > ojdbc6.jar(오라클 버전에 따라 적합한 JDBC 
+		
+	
+	JDBC의 모든 insert, update, delete등
+		- 실행 즉시 자동 커밋이 된다.
+		- Auto commit
+		- 굉장히 편하다~
+		
+		
+		
+		
+		
+		
+		
+		
+		
