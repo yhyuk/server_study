@@ -23,7 +23,7 @@
 		
 		rs = stat.executeQuery(sql);
 		
-		// 여기서 close() 금지 !! 
+		// 여기서 close() 금지 !
 		// rs.close();
 		// stat.close();
 		// conn.close();
@@ -31,6 +31,8 @@
 	} catch (Exception e) {
 		System.out.println(e);
 	}
+	
+	int count = 0;
 
 %>
 
@@ -71,18 +73,24 @@
 				<th>성별</th>
 				<th>주소</th>
 			</tr>
-			<% while ( rs.next() ) { %>
+			<% while ( rs.next() ) { 
+				count++;
+			%>
 			<tr>
 				<td><%= rs.getString("seq") %></td>
 				<td><%= rs.getString("name") %></td>
 				<td><%= rs.getString("age") %></td>
 				<td><%= rs.getString("gender").equals("m") ? "남자" : "여자" %></td>
-				<td><%= rs.getString("address") %></td>
+				<td>
+					<%= rs.getString("address") %>
+					<span class="glyphicon glyphicon-trash" onclick="del(<%= rs.getString("seq") %>);"></span>
+					<span class="glyphicon glyphicon-edit" onclick="edit(<%= rs.getString("seq") %>);"></span>
+				</td>
 			</tr>
 			<% } %>
 			
 			
-			<% if ( rs.getRow() ==0 ) { %>
+			<% if ( count == 0 ) { %>
 			<tr>
 				<td colspan="5">데이터가 없습니다.</td>
 			</tr>			
@@ -93,14 +101,21 @@
 		<div class="btns">
 		<input type="button" value="추가하기" class="btn btn-default" 
 				onclick="location.href='/jsp/jdbc/add.jsp'"/>
-			
-		
 		
 		</div>	
 	
 	</div>
 	
 	<script>
+	
+		function del(seq) {
+			// alert(seq);
+			location.href = '/jsp/jdbc/del.jsp?seq=' + seq;
+		}
+		
+		function edit(seq) {
+			location.href = '/jsp/jdbc/edit.jsp?seq=' + seq;
+		}
 
 
 	</script>
@@ -109,7 +124,6 @@
 
 
 <%
-	
 	// 여기서 close(); 자원해제 한다.
 	rs.close();
 	stat.close();
