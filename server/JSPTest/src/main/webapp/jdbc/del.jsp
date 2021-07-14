@@ -3,7 +3,6 @@
 <%
 	String seq = request.getParameter("seq");
 
-
 %>
 
 <!DOCTYPE html>
