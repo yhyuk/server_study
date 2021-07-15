@@ -271,10 +271,90 @@
 	- ex18_view.jsp			--> 이미지 목록 페이지
 		
 		
+	JSP에서 코드를 작성하는 패턴
+	1. JSP Model 1
+		- 지금까지 수업한 방식
+		- HTML + CSS + JavaScript + Java + JSP = *.jsp
+		- <% %>, <%= %> 사용
+		- 오래된 방식, 현재쓰는 잘 쓰이지 않음
+	
+	2. JSP Model 2
+		- 'MVC' Model 디자인 패턴
+		- Servlet + JSP = MVC
+	
+	JSP MVC	
+		- Servlet
+			a. 자바 기반 + 웹 추가
+			b. 자바 작업이 수월하다.
+			c. 웹 작업이 불편하다.
+			
+		- JSP
+			a. 웹 기반 + 자바 추가
+			b. 웹 작업이 수월하다.
+			c. 자바 작업이 불편하다.
 		
+		- Servlet + JSP
+			a. 자바 코드 	-> Servlet 담당
+			b. 웹 코드 		-> JSP 담당
+	
+	웹 페이지를 만드는 알바생?
+	1. Servlet
+		- 1개의 Servlet -> 1장의 웹페이지 생성
 		
+	2. JSP
+		- 1개의 JSP -> 1장의 웹페이지 생성
+	
+	JSP Model2 -> Hello 만들기
+	- 알바생 2명 -> 협력 -> 1장의 웹페이지 생성 //************
+	
+	1. Servlet
+		- "com.test.mvc" > "Hello.java"
 		
+	2. JSP
+		- webapp > "mvc" > "hello.jsp"
+	
+	- 알바생 2명의 업무 순서가 이미 정해져 있다. (억지로 바꿀 순 있는데.. 절대 안바꾼다 == 공식)
+		a. 브라우저가 페이지를 달라고 서버에 먼저 요청한다.
+			-> Servlet에게 페이지를 달라고 요청한다.
 		
+		b. Servlet이 먼저 말을 한다.
+			-> 할일 완료
+			-> JSP를 호출한다.
+		
+		c. JSP가 Servlet을 이어서 나머지 일을 한다.
+			-> 할일 완료
+			-> 웹페이지 완성
+		
+		d. 완성된 페이지를 브라우저에게 돌려준다.
+		
+	
+	주소록 MVC 버전
+	1. 주소록 목록보기(R)
+	2. 주소록 추가하기(C)
+	------------------------ C, U, D는 똑같은 행동이라 R, C만 실습예정
+	3. 주소록 수정하기(U)
+	4. 주소록 삭제하기(D)
+	
+	
+	파일 생성
+	- com.test.mvc
+		- List.java
+		- Add.java
+		- Addok.java
+		- Edit.java
+		- Editok.java
+		- Del.java
+		- Delok.java
+		
+	- WEB-INF > views > "address" 폴더 생성
+		- list.jsp
+		- add.jsp
+		- addok.jsp
+		- edit.jsp
+		- editok.jsp
+		- del.jsp
+		- delok.jsp
+			
 		
 		
 		
