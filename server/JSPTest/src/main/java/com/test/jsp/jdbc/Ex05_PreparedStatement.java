@@ -53,7 +53,7 @@ public class Ex05_PreparedStatement {
 		// 정적 or 동적 ?
 		// '홍길동' 부분이 사용자 입력?
 		// -> 동적 쿼리 -> PreparedStatement
-		String sql = "select * from tblAddress where name = '홍길동'"; // '홍길동': 사용자 입력값
+		String sql = "select * from tblAddress where name = ?"; // '홍길동': 사용자 입력값
 		
 		Connection conn = null;
 		PreparedStatement stat = null;
@@ -73,7 +73,9 @@ public class Ex05_PreparedStatement {
 			rs = stat.executeQuery();
 			
 			while ( rs.next() ) {
-				System.out.println(rs.getString("name") + "," + rs.getString("address"));
+				System.out.println(rs.getString("name"));
+				System.out.println(rs.getString("gender"));
+				System.out.println(rs.getString("address"));
 			}
 			
 			rs.close();
@@ -89,10 +91,10 @@ public class Ex05_PreparedStatement {
 	private static void m2() {
 		
 		// 사용자 입력
-		String name = "호'랑이";
+		String name = "호랑이";
 		int age = 25;
 		String gender = "f";
-		String address = "서울시 강남'구 대치동";
+		String address = "서울시 강남구 대치동";
 		
 		
 		Connection conn = null;
