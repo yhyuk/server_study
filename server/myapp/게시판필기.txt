@@ -1,0 +1,54 @@
+
+	myapp 
+	1. 패키지 구성
+		a. com.test.myapp
+			- 메인 패키지
+			- Index.java(index.jsp): 시작페이지
+			- Template.java(template.jsp): 템플릿
+			- EncodingFilter.java: 인코딩 필터
+		
+		b. com.test.myapp.board ( *** 주요업무)
+			- 게시판 패키지
+			- Template.java(template..jsp): 게시판 템플릿
+		
+		c. com.test.myapp.member
+			- 회원 패키지
+			- Login.java, LoginOk.java: 로그인
+			- Logout.java: 로그아웃
+			
+	2. 콘텐츠 구성
+		a. asset
+			- jQuery, Bootstrap
+			- images
+		
+		b. files
+			- 게시판 첨부파일
+		
+		c. inc
+			- 조각 페이지
+			- asset.jsp: 클라이언트 코드 참조 페이지
+			- header.jsp: 사이트 공통 헤더
+			- init.jsp: 초기 JavaScript 실행 페이지
+		
+		d. WEB-INF
+			1. lib
+				- cos.jar: 파일 업로드
+				- jstl-1.2.jar: JSTL
+				- ojdbc6.jar
+			2. views
+				- index.jsp: 시작페이지
+				- template.jsp: 템플릿
+				a. board
+				b. member	
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
