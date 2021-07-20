@@ -15,6 +15,9 @@ public class DelOk extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		CheckMember cm = new CheckMember();
+		cm.check(req, resp);
+		
 		// 할일
 		// 1. 데이터 가져오기(seq)
 		// 2. DB 작업 > DAO 위임 > delete
@@ -27,6 +30,9 @@ public class DelOk extends HttpServlet {
 		BoardDAO dao = new BoardDAO();
 		
 		HttpSession session = req.getSession();
+		
+		// 2.5 현재 글에 달린 댓글부터 삭제하기(***)
+		dao.delAllComment(seq); // 부모글번호
 		
 		int result = dao.del(seq);
 		

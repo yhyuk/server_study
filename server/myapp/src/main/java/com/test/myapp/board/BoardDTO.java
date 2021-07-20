@@ -13,6 +13,7 @@ public class BoardDTO {
 	
 	private String name; // 가상 컬럼 만들기 - 추가 멤버
 	private String isnew; // 새글 표시
+	private String ccnt;
 	
 	public String getSeq() {
 		return seq;
@@ -67,6 +68,12 @@ public class BoardDTO {
 	}
 	public void setIsnew(String isnew) {
 		this.isnew = isnew;
+	}
+	public String getCcnt() {
+		return ccnt;
+	}
+	public void setCcnt(String ccnt) {
+		this.ccnt = ccnt;
 	}
 	
 }

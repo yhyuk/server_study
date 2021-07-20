@@ -15,6 +15,9 @@ public class AddOk extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		CheckMember cm = new CheckMember();
+		cm.check(req, resp);
+		
 		// 할일
 		// 1. 데이터 가져오기
 		// 2. DB 작업 > DAO 위임 > insert

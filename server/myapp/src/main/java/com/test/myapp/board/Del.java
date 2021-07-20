@@ -15,6 +15,10 @@ public class Del extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		
+		CheckMember cm = new CheckMember();
+		cm.check(req, resp);
+		
 		// 할일
 		// 1. 데이터 가져오기(seq)
 		// 2. JSP 호출하기 + 글번호(seq) 전달하기
