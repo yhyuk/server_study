@@ -40,11 +40,29 @@
 				- template.jsp: 템플릿
 				a. board
 				b. member	
+		
+		
+	-------------------------------2021.07.20 게시판 추가기능 구현	
+	댓글 쓰기 
+	1. 별도 테이블
+		- tblComment
+	
+	2. JSP 페이지 (X)
+	3. Servlet(O)
+		- AddComment.java
+		- DelComment.java
+		- CommentDAO.java > X > BoardDAO 사용
+		- CommentDTO.java
 				
 				
-				
-				
-				
+	개시판 정책
+	1. 익명 사용자
+		- 목록보기가 가능하다. (list.do)
+		- 글보기가 가능하다. (view.do)
+		- 글쓰기, 수정하기, 삭제하기, 댓글쓰기 등은 불가능하다.			
+	
+	2. 수정하기, 삭제하기
+		- 글쓴이만 가능하게..			
 				
 				
 				

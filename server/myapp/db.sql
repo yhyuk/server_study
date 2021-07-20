@@ -7,9 +7,6 @@ select *from tblUsers;
 
 -- 게시판 테이블 > 단계 + 확장
 -- 기본 게시판
-drop table tblBoard;
-select * from tblboard;
-delete from tblboard;
 
 drop sequence seqBoard;
 
@@ -40,7 +37,29 @@ as
         subject, 
         readcount, 
         regdate,
-        (sysdate - regdate) as isnew
+        (sysdate - regdate) as isnew,
+        content,
+        (select count(*) from tblComment where pseq = tblBoards.seq) as ccnt
     from tblBoards;
 
 select * from vwBoard;
+
+
+
+
+
+-- 댓글 테이블 2021.07.20
+create table tblComment (
+
+    seq number primary key,                             -- 댓글번호(PK)
+    id varchar2(30) not null references tblUsers(id),   -- 아이디(FK)
+    content varchar2(2000) not null,                    -- 댓글내용
+    regdate date default sysdate not null,              -- 작성날짜
+    pseq number not null references tblBoards(seq)      -- 부모글번호(FK)
+
+);
+
+create sequence seqComment;
+
+
+select * from tblComment;
