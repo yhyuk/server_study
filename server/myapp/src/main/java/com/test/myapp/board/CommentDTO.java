@@ -7,7 +7,6 @@ public class CommentDTO {
 	private String content;
 	private String regdate;
 	private String pseq;
-	
 	private String name;
 	
 	public String getSeq() {

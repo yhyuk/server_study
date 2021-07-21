@@ -15,6 +15,9 @@ public class BoardDTO {
 	private String isnew; // 새글 표시
 	private String ccnt;
 	
+	private int thread; // 답변형 게시판
+	private int depth;
+	
 	public String getSeq() {
 		return seq;
 	}
@@ -74,6 +77,18 @@ public class BoardDTO {
 	}
 	public void setCcnt(String ccnt) {
 		this.ccnt = ccnt;
+	}
+	public int getThread() {
+		return thread;
+	}
+	public void setThread(int thread) {
+		this.thread = thread;
+	}
+	public int getDepth() {
+		return depth;
+	}
+	public void setDepth(int depth) {
+		this.depth = depth;
 	}
 	
 }
