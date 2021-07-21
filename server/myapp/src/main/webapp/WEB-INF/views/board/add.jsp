@@ -54,6 +54,10 @@
 				<button type="button" class="btn btn-default"
 					onclick="location.href='/myapp/board/list.do';">돌아가기</button>
 			</div>
+			
+			<input type="hidden" name="reply" value="${ reply }" />
+			<input type="hidden" name="thread" value="${ thread }" />
+			<input type="hidden" name="depth" value="${ depth }" />
 		</form>
 
 	</section>	

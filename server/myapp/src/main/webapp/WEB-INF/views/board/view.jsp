@@ -84,7 +84,7 @@
 				</c:if>
 			
 				<button type="button" class="btn btn-primary"
-					onclick="location.href='/myapp/board/add.do';">답변달기</button>
+					onclick="location.href='/myapp/board/add.do?reply=1&thread=${ dto.thread }&depth=${ dto.depth }';">답변달기</button>
 
 			</c:if>
 			
@@ -96,6 +96,7 @@
 		
 		
 		<div>
+		
 			<table id="tblListComment" class="table table-bordered">
 				
 				<c:if test="${ clist.size() == 0 }">

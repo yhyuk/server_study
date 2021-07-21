@@ -36,6 +36,8 @@
 		text-align: center;
 	}
 	
+	.pagebar { text-align: center; }
+	
 </style>
 
 </head>
@@ -67,10 +69,21 @@
 					<td colspan="5">게시물이 없습니다.</td>
 				</tr>
 			</c:if>
+			
+			
 			<c:forEach items="${ list }" var="dto">
 			<tr>
-				<td>${ dto.seq }</td>
 				<td>
+					<c:if test="${ dto.depth == 0 }">
+					${ dto.seq }
+					</c:if>
+				</td>
+				<td>
+				
+					<c:if test="${ dto.depth > 0 }">
+					<span style="color: cornflowerblue; margin-left:${ dto.depth*20 }px;">▶</span>
+					</c:if>
+					
 					<a href="/myapp/board/view.do?seq=${ dto.seq }&column=${ map.column }&search=${ map.search }">${ dto.subject }</a>
 					<c:if test="${ dto.ccnt > 0 }">
 					<span class="badge">${ dto.ccnt }</span>
@@ -87,12 +100,42 @@
 			</c:forEach>
 		</table>
 		
+		<!-- 페이징 가장 쉽고 기초적인 방법 1 -->
+		<%-- <div>
+			<form method="GET" action="/myapp/board/list.do">
+				<input type="number" name="page" min="1" max="${ totalPage }" value="${ nowPage }"/>
+				<input type="submit" value="페이지 보기" />
+			</form>
+		
+		</div>
+		
+		<hr /> --%>
+		
+		<!-- 페이징 기초적인 방법 2 -->
+		
+		<%-- <div>
+			<select id="selPage">
+				<c:forEach var="i" begin="1" end="${ totalPage }">
+					<option value="${ i }">${ i }page</option>
+				</c:forEach>
+			</select>
+		</div>
+		
+		<hr /> --%>
+		
+		<!-- 페이징 가장 보편적으로 많이 사용하는 방법 3 -->
+		<div class="pagebar">
+			${ pagebar }
+		</div>
+		
+		<hr />
+		
 		<div class="btns">
 		
 			<!-- 인증 티켓 소유자만 보이게끔.. -->
 			<c:if test="${ not empty id }">
 			<button type="button" class="btn btn-primary"
-				onclick="location.href='/myapp/board/add.do';">글쓰기</button>
+				onclick="location.href='/myapp/board/add.do?reply=0';">글쓰기</button>
 			</c:if>
 			
 			<button type="button" class="btn btn-default"
@@ -129,6 +172,15 @@
 			$( '#column' ).val('${ map.column }');		
 			$( '#search' ).val('${ map.search }');		
 		</c:if>
+		
+		
+		
+		$( '#selPage' ).change(function() {
+			
+			location.href = '/myapp/board/list.do?page=' + $(this).val();
+		});
+		
+		$( '#selPage' ).val('${ nowPage }');
 		
 	</script>
 </body>
