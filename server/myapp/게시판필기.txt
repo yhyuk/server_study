@@ -64,9 +64,32 @@
 	2. 수정하기, 삭제하기
 		- 글쓴이만 가능하게..			
 				
+	
+	
+	------------------------------- 2021.07.21
+	
+	페이징, Paging
+	- 데이터베이스 종류에 따라 구현 기법이 달라짐
+	1. 오라클: rownum 사용
+	2. MS-SQL : top 키워드 사용
+	3. MySQL : limit 키워드 사용
 				
 				
-				
+	
+	답변형 게시판 만들기
+	tblBoards - thread(number), depth(number) 컬럼 추가하기
+	
+	1. 새글 쓰기
+		- /board/add.do
+		a. 현존 모든 게시물 중에서 가장 큰 thread값을 찾는다. > 0 > 그 찾은 thread값에 +1000 한 값을 현재 새글의 thread값으로 사용한다.
+		b. 현재 새글의 depth는 0을 넣는다.
+		
+	2. 답변글 쓰기
+		- /board/add.do?reply=1
+		a. 현존 모든게시물의 thread값을 대상으로 현재 작성 중인 답변글인 부모글의 thread값보다 작고, 이전 새글의 thread값보다 큰 thread를 찾아서 모두 -1 한다.
+		b. 현재 작성중인 답변글의 thread값을 부모글의 thread - 1을 넣는다.
+		c. 현재 작성중인 답변글의 depth값을 부모글의 depth + 1을 넣는다.
+	
 				
 				
 				
