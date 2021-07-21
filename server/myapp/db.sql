@@ -62,4 +62,65 @@ create table tblComment (
 create sequence seqComment;
 
 
-select * from tblComment;
+
+
+
+
+
+
+
+
+-- 페이징
+-- 게시물을 일정 단위로 끊어서 가져오는 기법
+select * from vwBoard 조건;
+
+select subject, rownum from vwBoard v where rownum > 11 and rownum < 20;
+
+
+-- 기존의 뷰 새로 만들기
+create or replace view vwBoard
+as
+select a.*, rownum as rnum from
+    (select 
+        seq, id, 
+        (select name from tblUsers where id = tblBoards.id) as name, 
+        subject, readcount, regdate,
+        (sysdate - regdate) as isnew,
+        content,
+        (select count(*) from tblComment where pseq = tblBoards.seq) as ccnt,
+        thread, depth
+    from tblBoards order by thread desc) a;
+
+select * from vwBoard where rnum = 5;
+select * from vwBoard where rnum > 5 and rnum < 10;
+
+
+
+-- 답변기능 추가를 위해 테이블 수정하기
+
+drop table tblComment;
+drop sequence seqComment;
+
+drop table tblBoards;
+drop sequence seqBoards;
+
+create table tblBoards (
+    seq number primary key,                             -- 글번호(PK)
+    id varchar2(30) not null references tblUsers(id),   -- 아이디(FK)
+    subject varchar2(500) not null,                     -- 제목
+    content varchar2(400) not null,                     -- 내용
+    regdate date default sysdate not null,              -- 작성시각
+    readcount number default 0 not null,                -- 조회수
+    tag varchar2(1) not null check(tag in ('y', 'n')),  -- 글내용에 HTML 태그 허용 유무
+    thread number not null,                             -- 정렬 기준
+    depth number not null                               -- 출력
+);
+
+create sequence seqBoards;
+
+-- 지웠던 Comment 테이블도 다시 만들것!
+
+select nvl(max(thread), 0) + 1000 as thread from tblBoards;
+
+select * from tblBoards;
+select * from vwBoard;
