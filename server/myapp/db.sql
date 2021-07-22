@@ -31,18 +31,16 @@ select seq, (select name from tblUsers where id = tblBoards.id) as name, subject
 
 create or replace view vwBoard
 as
-    select 
-        seq, id, 
-        (select name from tblUsers where id = tblBoards.id) as name, 
-        subject, 
-        readcount, 
-        regdate,
-        (sysdate - regdate) as isnew,
-        content,
-        (select count(*) from tblComment where pseq = tblBoards.seq) as ccnt
-    from tblBoards;
+select 
+    seq, id, 
+    (select name from tblUsers where id = tblBoards.id) as name, 
+    subject, readcount, regdate,
+    (sysdate - regdate) as isnew,
+    content,
+    (select count(*) from tblComment where pseq = tblBoards.seq) as ccnt
+from tblBoards;
 
-select * from vwBoard;
+drop view vwBoard;
 
 
 
@@ -70,7 +68,7 @@ create sequence seqComment;
 
 
 
--- 페이징
+-- 2021.07.22 페이징
 -- 게시물을 일정 단위로 끊어서 가져오는 기법
 select * from vwBoard 조건;
 
@@ -91,9 +89,37 @@ select a.*, rownum as rnum from
         thread, depth
     from tblBoards order by thread desc) a;
 
+
+create or replace view vwBoard2
+as
+select * from
+    (select 
+        seq, id, 
+        (select name from tblUsers where id = tblBoards.id) as name, 
+        subject, readcount, regdate,
+        (sysdate - regdate) as isnew,
+        content,
+        (select count(*) from tblComment where pseq = tblBoards.seq) as ccnt,
+        thread, depth
+    from tblBoards order by thread desc);
+    
+
 select * from vwBoard where rnum = 5;
 select * from vwBoard where rnum > 5 and rnum < 10;
 
+create or replace view vwBoard3
+as
+select 
+        seq, id, 
+        (select name from tblUsers where id = tblBoards.id) as name, 
+        subject, readcount, regdate,
+        (sysdate - regdate) as isnew,
+        content,
+        (select count(*) from tblComment where pseq = tblBoards.seq) as ccnt,
+        thread, depth
+from tblBoards order by thread desc;
+
+select * from vwBoard3;
 
 
 -- 답변기능 추가를 위해 테이블 수정하기
@@ -123,4 +149,34 @@ create sequence seqBoards;
 select nvl(max(thread), 0) + 1000 as thread from tblBoards;
 
 select * from tblBoards;
-select * from vwBoard;
+select * from tblComment;
+
+
+----------------- 2021.07.22 차트 만들기
+
+-- 유저당 게시물 개수?
+-- 유저당 댓글 개수?
+
+--{
+--    name: '홍길동',
+--    y: 10
+--}, 
+--{
+--    name: '아무개',
+--    y: 3
+--}, 
+--{
+--    name: '관리자',
+--    y: 6
+--}
+
+select 
+    name, 
+    (select count(*) from tblBoards where id = tblUsers.id) as cnt 
+from tblUsers;
+
+select 
+    name, 
+    (select count(*) from tblComment where id = tblUsers.id) as cnt 
+from tblUsers;
+
