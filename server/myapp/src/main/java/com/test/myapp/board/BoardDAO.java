@@ -73,6 +73,7 @@ public class BoardDAO {
 				// where subject like '%날씨%'
 				// where all like '%날씨%'
 				
+				/*
 				if ( map.get("column").equals("all") ) {
 					where = String.format(" and where subject like '%%%s%%' or content like '%%%s%%' "
 							, map.get("search"), map.get("search"));
@@ -80,14 +81,33 @@ public class BoardDAO {
 					where = String.format(" and %s like '%%%s%%' "
 							, map.get("column"), map.get("search"));
 				}
+				*/
+				
+	            if (map.get("column").equals("all")) {
+	                where = String.format(" where subject like '%%%s%%' or content like '%%%s%%' "
+	                		, map.get("search"), map.get("search"));
+	             } else {
+	                where = String.format(" where %s like '%%%s%%' "
+	                		, map.get("column"), map.get("search"));
+	             }
+
 				
 			}
 			
 			// 페이지 조건 <-> (분리) <-> 검색 조건
+			/*
 			String sql = String.format("select * from vwBoard where rnum between %s and %s %s order by thread desc"
 										, map.get("begin")
 										, map.get("end")
 										, where); 
+										
+			*/
+			
+	         String sql = String.format("select * from (select b.*, rownum as rnum from vwBoard3 b %s) where rnum between %s and %s order by thread desc"
+	                 , where
+	                 , map.get("begin")
+	                 , map.get("end"));
+
 			
 			pstat = conn.prepareStatement(sql);
 			

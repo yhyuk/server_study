@@ -37,17 +37,23 @@ public class Dummy {
 		
 		try {
 			
-			String sql = "insert into tblBoards (seq, id, subject, content, regdate, readcount, tag)"
-					+ " values (seqBoards.nextVal, ?, ?, ?, default, default, ?)";
+			String sql = "insert into tblBoards (seq, id, subject, content, regdate, readcount, tag, thread, depth)"
+					+ " values (seqBoards.nextVal, ?, ?, ?, default, default, ?, ?, ?)";
 			conn = DBUtil.open();
 			stat = conn.prepareStatement(sql);
 			
-			for ( int i=0; i<387; i++ ) {
+			int thread = 1000;
+			
+			for ( int i=0; i<50; i++ ) {
+				
+				thread += 1000;
 				
 				stat.setString(1, id[rnd.nextInt(id.length)]);
 				stat.setString(2, subject[rnd.nextInt(subject.length)]);
 				stat.setString(3, content);
 				stat.setString(4, tag);
+				stat.setInt(5, thread);
+				stat.setInt(6, 0);
 				
 				stat.executeQuery();
 				
