@@ -180,3 +180,21 @@ select
     (select count(*) from tblComment where id = tblUsers.id) as cnt 
 from tblUsers;
 
+
+
+----------------- 2021.07.23 지도 DB 만들기
+
+create table tblPlace (
+    seq number primary key,         -- PK
+    name varchar2(100) not null,    -- 장소명
+    lat number not null,            -- 위도(Latitude)
+    lng number not null             -- 경도(Longitude)
+);
+
+
+create sequence seqPlace;
+
+
+create user web identified by java1234;
+grant create session to web;
+grant connect, resource to web; 
