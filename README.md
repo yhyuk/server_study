@@ -3,4 +3,4 @@
 - 수업 언어 : Java(JDK 1.8)
 - 개발 도구 : Eclipse
 - WAS, 컨테이너 : Tomcat 3.1
-- Server : Servlet, JSP 
+- Server : Servlet, JSP, JDBC(Oracle)
