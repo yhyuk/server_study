@@ -17,10 +17,10 @@ public class Ex06_CallableStatement {
 		 */
 		
 		//m1(); 	// 프로시저 ( 매개변수 X ) 호출
-		//m2(); 	// 프로시저 ( 매개변수 O ) 호출 
+		///m2(); 	// 프로시저 ( 매개변수 O ) 호출 
 		//m3();	// 프로시저의 아웃 파라미터 받기
-		m4();
-		//m5();
+		//m4();
+		m5();
 	
 	} // main
 	
@@ -54,7 +54,7 @@ public class Ex06_CallableStatement {
 			
 			while ( rs.next() ) {
 				System.out.println(rs.getString("name") + 
-									"," + rs.getString("gender"));
+									", " + rs.getString("age"));
 			}
 			
 			rs.close();
@@ -85,7 +85,7 @@ public class Ex06_CallableStatement {
 			stat = conn.prepareCall(sql);
 			
 			// in (값 넣기)
-			stat.setString(1, "32");
+			stat.setString(1, "45");
 			
 			// out (등록하기)
 			stat.registerOutParameter(2, OracleTypes.VARCHAR);
@@ -137,7 +137,6 @@ public class Ex06_CallableStatement {
 			
 			// out 매개변수 x 1개
 			stat.registerOutParameter(5, OracleTypes.NUMBER); // ***********
-			
 			stat.executeUpdate();
 			
 			// 결과값

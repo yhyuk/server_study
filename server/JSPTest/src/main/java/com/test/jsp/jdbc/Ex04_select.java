@@ -11,11 +11,11 @@ public class Ex04_select {
 		// Ex04_select.java
 		
 		// 반환값이 있는 쿼리 -> select문
-		//m1(); // 인원수
+		m1(); // 인원수
 		//m2(); // 이름
 		//m3(); // 다중컬럼   결과셋: 1개의 레코드 + 여러 컬럼
 		//m4(); // 다중레코드 결과셋: N개의 레코드 + 1개 컬럼
-		m5();	// N개의 레코드 + N개의 컬럼
+		//m5();	// N개의 레코드 + N개의 컬럼
 	}
 
 	private static void m5() {
@@ -59,6 +59,7 @@ public class Ex04_select {
 		}
 		
 	}
+	
 
 	private static void m4() {
 		

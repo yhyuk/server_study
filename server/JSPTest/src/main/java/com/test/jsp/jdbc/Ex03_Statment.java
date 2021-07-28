@@ -13,11 +13,12 @@ public class Ex03_Statment {
 		 * Statement 클래스 - 모든 SQL 구문을 실행하는 역할
 		 * 
 		 * 
-		 * Statement 종류 1. Statement - 기본
+		 * Statement 종류 
+		 * 1. Statement - 기본
 		 * 
 		 * 2. PreparedStatement - 인자값과 관련된 작업을 특화 - 코드 안정성 높음, 가독성 높음 - 코드량이 많음
-		 * ------------------------------------------------------ 텍스트 쿼리 실행용 3.
-		 * CollableStatement - 프로시저 전용 Statement
+		 * ------------------------------------------------------ 텍스트 쿼리 실행용 
+		 * 3. CallableStatement - 프로시저 전용 Statement
 		 * ------------------------------------------------------ 프로시저 실행용
 		 */
 
