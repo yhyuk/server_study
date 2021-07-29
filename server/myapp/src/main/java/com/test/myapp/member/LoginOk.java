@@ -41,7 +41,6 @@ public class LoginOk extends HttpServlet {
 			HttpSession session = req.getSession();
 			
 			session.setAttribute("id", result.getId());
-			
 			session.setAttribute("name", result.getName());
 			session.setAttribute("lv", result.getLv());
 			session.setAttribute("regdate", result.getRegdate());
