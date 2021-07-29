@@ -6,4 +6,5 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/asset/css/myapp.css" />
 <script src="<%= request.getContextPath() %>/asset/js/jquery-3.6.0.js"></script>
 <script src="<%= request.getContextPath() %>/asset/js/bootstrap.js"></script>
+<script src="<%= request.getContextPath() %>/asset/js/cookie.js"></script>
 <!-- /inc/asset.jsp -->
