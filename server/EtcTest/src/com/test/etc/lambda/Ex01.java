@@ -13,10 +13,6 @@ public class Ex01 {
 		MyClass a1 = new MyClass();
 		OtherClass a2 = new OtherClass();
 		
-		
-		
-		
-		
 		// 클래스 객체를 클래스 변수에 담아서 사용하기
 		MyClass m1 = new MyClass();
 		m1.test();
@@ -32,7 +28,6 @@ public class Ex01 {
 		list.add(3);
 		list.add(2);
 		list.add(4);
-		
 		
 		list.sort(new MyComparator());
 		

@@ -7,6 +7,7 @@ public class Ex02 {
 		// 클래스 변수 = 객체
 		TestClass t1 = new TestClass();
 		t1.test();
+		t1.other();
 		
 		// 인터페이스 변수 = 객체
 		TestInterface t2 = new TestClass();
@@ -25,6 +26,7 @@ public class Ex02 {
 		};
 		t3.test();
 		
+		System.out.println("=======================================");
 		// 자바의 람다식
 		// - 위의 t3와 비교해서 정리(******)
 		// - 장점 + 목적 : 코드를 간결하게 사용할 수 있다.
@@ -73,7 +75,8 @@ public class Ex02 {
 		// a8, a9 코드는 같다.
 		ParameterReturn a8 = (int a, int b) -> { return a + b; };
 		ParameterReturn a9 = (a,b) -> a+b;
-		
+		System.out.println(a8.call(100, 200));
+		System.out.println(a9.call(100, 200));
 	}
 }
 
