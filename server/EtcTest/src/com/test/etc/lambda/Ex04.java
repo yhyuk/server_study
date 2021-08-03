@@ -2,9 +2,14 @@ package com.test.etc.lambda;
 
 import java.util.Calendar;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class Ex04 {
@@ -27,16 +32,166 @@ public class Ex04 {
 		 * 		-> 우선 2가지 정도만 머릿속에 꼭 기억하면 된다.
 		 * 	2. Supplier	: 매개변수X, 반환값O
 		 * 		-> Supplier<T> 
-		 * 		-> 기억할 것!
 		 * 	3. Function	: 매개변수O, 반환값O -> 매개변수를 반환값으로 변환 후 반환
+		 * 		-> Function<T>
+		 * 		-> Bifunction<T,R>
 		 * 	4. Operator	: 매개변수O, 반환값O -> 매개변수를 연산 후 결과 반환 (Function 하위 버전)
+		 * 		-> BinaryOperator<T>
 		 * 	5. Predicate: 매개변수O, 반환값O -> 매개변수를 논리 연산 후 결과 반환 (Function 하위 버전)
-		 * 
+		 * 		-> Predicate<T>
 		 */
 		
 		//m1(); // Consumer
-		m2(); // Supplier
+		//m2(); // Supplier
+		//m3(); // Function
+		//m4();	// Operator
+		//m5(); // Predicate
 		
+		//m6();
+		m7();
+		
+	}
+
+	private static void m7() {
+		
+		Predicate<Integer> p1 = num -> num > 0;
+		Function<Boolean, String> f1 = flag -> flag ? "참" : "거짓";
+		Consumer<String> c1 = str -> System.out.println(str.length());
+		
+		
+	}
+
+	private static void m6() {
+		
+		// 함수형 인터페이스
+		// - 추상 메소드 1개 제공한다.
+		// - 디폴트 메소드 & 정적 메소드 제공한다.
+		
+		// Consumer, Function, Operator
+		// 1. andThen()
+		//		- 이미 존재하는 람다식을 순서에 따라 연속적으로 호출할 수 있도록 결합해주는 역할
+		//		- A.andthen(B) : A -> B
+		// 2. compose()
+		
+		int n = 10;
+		
+		Consumer<Integer> c1 = num -> System.out.println(num > 0 ? "양수" : "음수 or 0");
+		c1.accept(n);
+		
+		Consumer<Integer> c2 = num -> System.out.println(num % 2 == 0 ? "짝수" : "홀수");
+		c2.accept(n);
+		
+		n = -3;
+		c1.accept(n);
+		c2.accept(n);
+		
+		// 업무(***********) -> c1과 c2를 같이 실행해야 한다 ??!
+		Consumer<Integer> c3 = c1.andThen(c2); // c1 -> c2
+		c3.accept(100);
+		System.out.println();
+		
+		Function<Integer, Boolean> f1 = num -> num > 0;
+		Function<Boolean, String> f2 = flag -> flag ? "양수" : "음수";
+		
+		Function<Integer, String> f3 = f1.andThen(f2);
+		
+		System.out.println(f3.apply(10));
+		System.out.println();
+		
+		
+		Function<Integer, String> f4 = f2.compose(f1);
+		System.out.println(f4.apply(10));
+		
+		Predicate<Integer> p1 = num -> num % 2 == 0; // 2의 배수 
+		Predicate<Integer> p2 = num -> num % 3 == 0; // 3의 배수
+		
+		System.out.println(p1.test(2));
+		System.out.println(p1.test(3));
+		System.out.println();
+		
+		System.out.println(p2.test(2));
+		System.out.println(p2.test(3));
+		System.out.println();
+		
+		Predicate<Integer> p3 = p1.and(p2); // p1의 결과 && p2의 결과
+		System.out.println(p3.test(6)); // 2의 배수 & 3의 배수 -> true
+		System.out.println(p3.test(5)); // 2의 배수 & 3의 배수 -> false
+		System.out.println();
+		
+		Predicate<Integer> p4 = p1.or(p2); // p1의 결과 || p2의 결과
+		System.out.println(p4.test(2)); // 2의 배수 or 3의배수 -> true
+		System.out.println(p4.test(3)); // 2의 배수 or 3의배수 -> true
+		System.out.println(p4.test(5)); // 2의 배수 or 3의배수 -> false
+		System.out.println();
+		
+		Predicate<Integer> p5 = p1.negate(); // !p1
+		System.out.println(p5.test(2));
+		System.out.println(p5.test(3));
+		System.out.println();
+	}
+
+	private static void m5() {
+		
+		// 5. Predicate: 매개변수O, 반환값O 
+		// - 매개변수의 값을 받아 무언가 조사한 후 논리값을 반환한다.
+		// - testXXX()
+		
+		Function<Integer, Boolean> f1 = n -> n > 0;
+		Predicate<Integer> p1 = n -> n > 0;
+		
+		if (p1.test(10)) { 
+			System.out.println("양수");
+		} else {
+			System.out.println("음수 or 0");
+		}
+		
+		BiPredicate<Integer, Integer> bp1 = (a, b) -> a > b;
+		System.out.println(bp1.test(20, 10));
+		
+	}
+
+	private static void m4() {
+		
+		// 4. Operator	: 매개변수O, 반환값O 
+		// - 매개변수를 연산 후 결과 반환 (Function 하위 버전)
+		// - applyXXX()
+		// - Operator는 Function과 다르게 매개변수의 타입과 반환값의 타입이 동일하다.(연산자들이 보통 이러한 성질을 가지기 때문에.. 흉내)
+		
+		BiFunction<Integer,	Integer, Integer> bf1 = (a, b) -> a * b;
+		BinaryOperator<Integer> bo1 = (a, b) -> a * b;
+		System.out.println(bf1.apply(10, 20));
+		System.out.println(bo1.apply(10, 20));
+		
+	}
+
+	private static void m3() {
+		
+		// 3. Function	: 매개변수O, 반환값O 
+		// - 매개변수를 반환값으로 변환 후 반환
+		// - applyXXX() 메소드를 제공한다.
+		
+		
+		// <T> the type of the input to the function
+		// <R> the type of the result of the function
+		
+		// - Integer apply(String s) -> 람다식
+		Function<String, Integer> f1 = str -> str.length();
+		System.out.println(f1.apply("홍길동"));
+		System.out.println(f1.apply("안녕하세요. 홍길동입니다."));
+		
+		Function<Integer, String> f2 = num -> num > 0 ? "양수" : "음수 or 0";
+		System.out.println(f2.apply(100));
+		System.out.println(f2.apply(-100));
+		
+		BiFunction<Integer, Integer, Integer> f3 = (a, b) -> a + b;
+		System.out.println(f3.apply(20, 30));
+		
+		BiFunction<Integer, Integer, Boolean> f4 = (a, b) -> a > b;
+		System.out.println(f4.apply(20, 10));
+		System.out.println(f4.apply(10, 20));
+		
+		BiFunction<String, Integer, String> f5 = (str, index) -> str.substring(index, index + 1);
+		System.out.println(f5.apply("홍길동입니다.", 3));
 	}
 
 	private static void m2() {
@@ -117,8 +272,62 @@ public class Ex04 {
 
 }
 
-
-// 직접
+// 직접 인터페이스 만들기
 interface MyConsumer {
 	void accept(String str);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 인터페이스의 멤버
+// - 구현 멤버를 가질 수 없다.
+// 1. 추상 메소드만 가진다.
+// 2. 정적 메소드를 가진다.
+// 3. 디폴트 메소드를 가진다.
+interface ITest {
+	
+	// 추상 멤버
+	void test();
+	void aaa();
+	void bbb(int a);
+	
+	// 구현(일반) 멤버 -> 에러
+	// private int a;
+	// public void ccc() {}
+	
+	// 정적 멤버 변수
+	public static final int a = 10;
+	
+	// 디폴트 메소드
+	public default void ccc() {
+		
+	}
+	
+	// 정적 메소드
+	public static void bbb() {
+		
+	}
+	
+}
+
+
+
+
+
+
+
+
