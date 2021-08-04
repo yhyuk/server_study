@@ -1,13 +1,20 @@
 package com.test.etc.lambda;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import com.test.data.Color;
+import com.test.data.Data;
 
 public class Ex05 {
 
@@ -34,7 +41,252 @@ public class Ex05 {
 		// 3. iterator
 		// 4. 스트림
 		
-		m1();
+		//m1();
+		//m2();
+		//m3();
+		//m4();
+		m5();
+	}
+
+	private static void m5() {
+		
+		// 중복 제거
+		// - distinct()
+		// - 중간 파이프
+		
+		List<Integer> list = Data.getIntList();
+
+		System.out.println(list.size());
+		System.out.println();
+		System.out.println(list.stream().distinct().count());
+		System.out.println();
+		
+		List<String> names = Arrays.asList("홍길동", "아무개", "하하하", "김훈", "김훈", "홍길동", "호호호", "아무개", "김길동", "테스트");
+
+		// 경우에 따라 중간 파이프의 순서가 결과에 영향을 미치는 경우가 있다. (주의!!! ****)
+		// 		1. distinct() -> filter()
+		//		2. filter()	-> distinct()
+		//			-> 1번과 2번은 결과가 다를 수도 있다!!!!
+		names.stream()
+			.distinct() // 중복값 제거
+			.filter(name -> name.length() >= 3) // 3글자 이상 찾기
+			.forEach(name -> System.out.println(name));
+		System.out.println();
+	}
+
+	private static void m4() {
+		
+		/* 
+		 *  스트림에서 제공하는 기능
+		 *  - 파이프 라인, Pipe Line (= 메소드 체인)
+		 * 	- 배열 -> 스트림 -> 조작(a) -> 스트림 -> 조작(a) -> 스트림 -> 조작(b) -> *반복.....
+		 * 		1. 시작, 중간 조작 	(a): 중간 처리 -> 필터링, 매핑, 정렬, 그룹핑 등
+		 *  	2. 마지막 조작 		(b): 최종 처리 -> 합계, 평균, 카운트, 최댓값, 최솟값, forEach 등..
+		 */
+		
+		// 필터링
+		// - filter()
+		// - 중간 처리 파이프
+		// - 반환값으로 필터링이 된 Stream을 반환하기 때문에 계속 이어서 다른 파이프를 연결할 수 있다.(****)
+		
+		List<Integer> list = Data.getIntList(15);
+		
+		System.out.println(list);
+		System.out.println();
+		
+		// 요구사항) 짝수만 출력하시오.
+		
+		// 방법1 - 기존 향상된 for문
+		for (int n : list) {
+			if (n % 2 == 0) {
+				System.out.printf("%4d", n);
+			}
+		}
+		System.out.println();
+		
+		// 방법2 - 스트림 사용
+		list.stream().forEach(n -> {
+			if (n % 2 == 0) {
+				System.out.printf("%4d", n);
+			}
+		});
+		System.out.println();
+		
+		// 방법3 - 스트림 사용 + 권장된 방법
+		// 스트림 시작 -> filter 처리(중간 파이프) -> forEach 처리(최종 파이프)
+		// 스트림 시작 -> 홀수 걸러내기(짝수 찾기) -> 남은 숫자(짝수) 출력하기
+		list.stream().filter(n -> n % 2 == 0).forEach(n -> System.out.printf("%4d" , n));
+		System.out.println();
+		
+		// 3의 배수
+		list.stream().filter(n -> n % 3 == 0).forEach(n -> System.out.printf("%4d" , n));
+		System.out.println();
+		
+		// 50보다 큰 수
+		list.stream().filter(n -> n > 50).forEach(n -> System.out.printf("%4d" , n));
+		System.out.println();
+		
+		// 10보다 작은 수
+		list.stream().filter(n -> n < 10).forEach(n -> System.out.printf("%4d" , n));
+		System.out.println();
+		
+		
+		// 5글자 이상 찾기
+		Data.getStringList().stream().filter(str -> str.length() >= 5).forEach(str -> System.out.println(str));
+		System.out.println();
+
+		// "모"로 시작하는 단어 찾기
+		Data.getStringList().stream().filter(str -> str.startsWith("모")).forEach(str -> System.out.println(str));
+		System.out.println();
+		
+		// ======================================================================================
+		// [name=홍길동, age=20, weight=70, height=175, gender=1]
+		// System.out.println(Data.getUserList());
+		Data.getUserList().stream().forEach(user -> System.out.println(user.getName()));
+		System.out.println();
+		
+		// 남자만 찾기
+		Data.getUserList().stream()
+			.filter(user -> user.getGender() == 1)
+			.forEach(user -> System.out.println(user.getName()));
+		System.out.println();
+		
+		// 여자만 찾기
+		Data.getUserList().stream()
+		.filter(user -> user.getGender() == 2)
+		.forEach(user -> System.out.println(user.getName()));
+		System.out.println();
+		
+		// 키 170 이상 + 몸무게 70 이상
+		Data.getUserList().stream()
+			.filter(user -> user.getHeight() > 170 && user.getWeight() > 70)
+			.forEach(user -> System.out.println(user));
+		System.out.println();
+		
+		// ======================================================================================
+		
+		// [name=마우스, size=10, color=RED, date=2019-11-02]
+		// System.out.println(Data.getItemList());
+		
+		// 노란색(yellow)만 찾기
+		Data.getItemList().stream()
+			.filter(item -> item.getColor() == Color.YELLOW)
+			.forEach(item -> System.out.printf("%s(%s, %d)\n", item.getName(), item.getColor(), item.getSize()));
+		System.out.println();
+
+		// 노란색(yellow) + size > 30 찾기
+		// 방법1 - 하나의 filter안에 여러개의 조건이 있는걸 권장하지 않는다.!!!
+		Data.getItemList().stream()
+			.filter(item -> item.getColor() == Color.YELLOW && item.getSize() > 30)
+			.forEach(item -> System.out.printf("%s(%s, %d)\n", item.getName(), item.getColor(), item.getSize()));
+		System.out.println();
+
+		// 방법2 - filter 2개 처리(권장)
+		Data.getItemList().stream()
+			.filter(item -> item.getColor() == Color.YELLOW) // 노란색 조건
+			.filter(item -> item.getSize() > 30) // size > 30 조건
+		.forEach(item -> System.out.printf("%s(%s, %d)\n", item.getName(), item.getColor(), item.getSize()));
+		System.out.println();
+	}
+
+	private static void m3() {
+		
+		// 스트림을 얻어오기
+		// 1. "순수배열" 로부터
+		// 2. "컬렉션" 으로부터
+		// ========================== 어제 수업 복습. 아래부터 오늘 배울 내용
+		// 3. "숫자범위" 로부터
+		//		-> 파이썬의 range(1, 10)과 비슷... 1부터 10 전까지..
+		// 4. "파일" 로부터
+		// 5. "디렉토리" 로부터
+		
+		// 1. 순수배열
+		int[] list1 = { 10, 20, 30, 40, 50 };
+		Arrays.stream(list1).forEach(n -> System.out.printf("%4d", n));
+		System.out.println();
+		
+		// 2. 컬렉션
+		// ArrayList에 초기화 + 값추가(add) 한것과 같다. -> 읽기전용
+		List<String> list2 = Arrays.asList("홍길동", "아무개", "하하하");
+		// list2.add("테스트"); // -> 읽기 전용이므로 중간에 값을 추가하면 error
+		// System.out.println(list2);
+		list2.stream().forEach(name -> System.out.printf("%s ", name));
+		System.out.println();
+		
+		// 3. 숫자범위
+		IntStream list3 = IntStream.range(1, 11);
+		list3.forEach(n -> System.out.printf("%4d", n));
+		System.out.println();
+		
+		try {
+			
+			// 파일, 디렉토리 조작 + 파일 입출력 -> 일부 기능에서 스트림 사용을 제공한다. -> 굉장히 편하다.
+			
+			// 4. 파일 읽기
+			// 4-1. 기존 BufferedReader 방식
+			BufferedReader reader = new BufferedReader(new FileReader(".\\data\\data.txt"));
+			
+			String line = "";
+			
+			while ((line = reader.readLine()) != null) {
+				System.out.println(line);
+			}
+			reader.close();
+			System.out.println();
+			
+			// 4-2. 스트림 방식
+			Files.lines(Paths.get(".\\data\\data.txt")).forEach(ln -> System.out.println(ln));
+			System.out.println();
+			
+			// 5. 디렉토리
+			
+			// 5-1. 기존 폴더 부르기
+			// File dir = new File("D:\\class\\server");
+			// File] list = dir.listFiles();
+			
+			// 5-2. 스트림 방식
+			Path workspace = Paths.get("D:\\class\\server"); // 현재폴더
+			Files.list(workspace).forEach(path -> System.out.println(path.toString())); //Stream<Path>
+			System.out.println();
+			
+			
+			
+			// JDK 1.8에서 스트림과 람다식이 제공되면서
+			// 기존에 사용하던 집합을 다루는 기능 중 일부에게
+			// 스트림과 람다식을 사용할 수 있도록 추가 기능을 제공한다.
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// -----> 스트림을 얻어오는 방법 5가지를 배웠는데 순수 배열, 컬렉션 방법이 압도적으로 많이 쓰인다.
+	}
+
+	private static void m2() {
+		
+		/*
+		int[] nums1 = Data.getIntArray();
+		System.out.println(Arrays.toString(nums1));
+		
+		int[] nums2 = Data.getIntArray(10);
+		System.out.println(nums2.length);
+		System.out.println(Arrays.toString(nums2));
+		
+		List<Integer> nums3 = Data.getIntList(5);
+		System.out.println(nums3);
+		
+		List<String> list = Data.getStringList(10);
+		System.out.println(list);
+		*/
+		
+		Data.getIntList().stream().forEach(num -> System.out.println(num));
+		System.out.println();
+		
+		// 이어지는 함수가 길어지면 들여쓰기로 하기도 한다. ( 회사 규정에 따라 다르니 참고 )
+		Data.getStringList(10)
+			.stream()
+			.forEach(word -> System.out.printf("%s(%d)\n", word, word.length()));
+		System.out.println();
 		
 	}
 
