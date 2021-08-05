@@ -15,6 +15,8 @@ import java.util.stream.Stream;
 
 import com.test.data.Color;
 import com.test.data.Data;
+import com.test.data.Item;
+import com.test.data.User;
 
 public class Ex05 {
 
@@ -45,7 +47,189 @@ public class Ex05 {
 		//m2();
 		//m3();
 		//m4();
-		m5();
+		//m5();
+		//m6();
+		//m7();
+		m8();
+	}
+
+	private static void m8() {
+		
+		// 집계
+		// - 통계값 함수
+		// - 최종 처리 파이프
+		// - 데이터 집합의 요소를 가공해서 축소하는 작업(Reduction)
+		
+		System.out.println(Data.getIntList().stream().count());
+		System.out.println(Data.getIntList().stream().filter(n -> n % 2 == 0).count());
+		System.out.println(Data.getIntList().stream().filter(n -> n % 2 == 1).count());
+		System.out.println();
+		
+		
+		System.out.println(Data.getUserList().stream().count());
+		System.out.println(Data.getUserList().stream().filter(user -> user.getGender() == 1).count());
+		System.out.println(Data.getUserList().stream().filter(user -> user.getGender() == 2).count());
+		System.out.println();
+		
+		System.out.println(Data.getItemList().stream().count());
+		System.out.println(Data.getItemList().stream().filter(item -> item.getColor() == Color.YELLOW).count());
+		System.out.println(Data.getItemList().stream().filter(item -> item.getColor() == Color.BLUE).count());
+		System.out.println(Data.getItemList().stream().filter(item -> item.getColor() == Color.VIOLET).count());
+		System.out.println(Data.getItemList().stream().filter(item -> item.getColor() == Color.GREEN).count());
+		System.out.println(Data.getItemList().stream().filter(item -> item.getColor() == Color.GRAY).count());
+		System.out.println(Data.getItemList().stream().filter(item -> item.getColor() == Color.WHITE).count());
+		System.out.println(Data.getItemList().stream().filter(item -> item.getColor() == Color.BLACK).count());
+		System.out.println(Data.getItemList().stream().filter(item -> item.getColor() == Color.RED).count());
+		System.out.println();
+		
+		
+		// 집계 함수
+		// - 범용 스트림
+		// - 전용 스트림
+
+		// Optional 클래스
+		// - 기존의 값형에 null을 추가한 자료형
+		// - int + null
+		
+		System.out.println(Data.getIntList().stream().max((a, b) -> a - b).get());
+		System.out.println(Arrays.stream(Data.getIntArray()).max().getAsInt());
+
+		System.out.println(Data.getIntList().stream().min((a, b) -> a - b).get());
+		System.out.println(Arrays.stream(Data.getIntArray()).min().getAsInt());
+		
+		System.out.println(Arrays.stream(Data.getIntArray()).sum());
+		
+		System.out.println(Arrays.stream(Data.getIntArray()).average().getAsDouble());
+		
+		
+	}
+
+	private static void m7() {
+		
+		// 정렬
+		// - 배열, 컬렉션
+		// - 스트림 정렬
+		// - sorted()
+		// - 중간 처리 파이프
+		// - 요소를 정렬 후 정렬된 스트림을 반환
+		
+		List<Integer> list1 = Data.getIntList(15);
+		
+		list1.stream().forEach(n -> System.out.printf("%4d", n));
+		System.out.println();
+		
+		// 방법1 - 기존 sort 사용
+		list1.sort((a, b) -> a - b); // 오름차순 정렬
+		list1.stream().forEach(n -> System.out.printf("%4d", n));
+		System.out.println();
+		
+		// 방법2 - sorted 사용
+		List<Integer> list2 = Data.getIntList(15);
+		list2.stream().sorted().forEach(n -> System.out.printf("%4d", n));
+		System.out.println();
+		
+		// =============================================================================
+		// 예제1) 방금 배운 map + sorted 
+		Data.getStringList(10)
+			.stream()
+			.map(str -> str.length())
+			.sorted()
+			.forEach(n -> System.out.println(n));		
+		System.out.println();
+		
+		// 예제2) sorted는 문자를 대상으로 정렬도 가능하다.
+		List<String> list3 = Data.getStringList(10);
+		list3.stream().sorted().forEach(word -> System.out.println(word));
+		System.out.println();
+		
+		// 예제3) 역정렬
+		List<Integer> list4 = Data.getIntList(15);
+		list4.stream()
+			.sorted((a, b) -> b - a)
+			.forEach(n -> System.out.printf("%4d", n));
+		System.out.println();
+		
+		// 예제4) 문자수가 작은것 부터 정렬
+		List<String> list5 = Data.getStringList(10);
+		list5.stream()
+			.sorted((a, b) -> a.length() - b.length())
+			.forEach(word -> System.out.println(word));
+		System.out.println();
+		
+		// 예제5) 날짜정렬
+		List<Item> list6 = Data.getItemList();
+		list6.stream()
+			.sorted((a, b) -> a.getName().compareTo(b.getName()))
+			.forEach(item -> System.out.println(item));
+		System.out.println();
+
+		list6.stream()
+			.sorted((a, b) -> a.getSize() - b.getSize())
+			.forEach(item -> System.out.println(item));
+		System.out.println();
+		
+		list6.stream()
+			.sorted((a, b) -> a.getDate().compareTo(b.getDate()))
+			.forEach(item -> System.out.println(item));
+		System.out.println();
+		
+	}
+
+	private static void m6() {
+		
+		// 소스 -> 스트림 -> 중간 처리(파이프) x N -> 최종 처리(파이프)
+		// 중간 파이프: filter(), distint()
+		// 최종 파이프: forEach()
+		// ==============================================어제 배운것
+		
+		
+		// 매핑
+		// - mapXXX()
+		// - 스트링 요소 -> 다른 형태의 요소(값)으로 변환해서 반환하는 작업
+		// - 중간 파이프
+		
+		List<String> list = Data.getStringList();
+		System.out.println(list);
+		System.out.println();
+		
+		// 각 문자열의 길이를 확인? > 문자열(String) -> 매핑(변환) -> 길이(int)
+		list.stream().forEach(str -> System.out.printf("%s(%d)\n", str, str.length()));
+		System.out.println();
+		
+		// 매핑은 리턴값에 따라 자료형이 달라진다!
+		// -> word -> word.length() : Integer
+		// -> word -> word : String
+		// -> word -> true : Boolean
+		list.stream().map(word -> word.length()).forEach(n -> System.out.println(n));
+		System.out.println();
+		
+		// 매핑은 데이터 가공(변환)할때 쓰인다!!
+		
+		
+		// 예제1) 나이를 구해서, 세대(데이터 가공) 구하기
+		Data.getIntList(10)
+			.stream()
+			.forEach(n -> System.out.println("나이: " + n  + "세"));
+		System.out.println();
+
+		
+		Data.getIntList(10)
+			.stream()
+			.map(n -> (n / 10) * 10) // 원본 -> 다른 성격의 데이터
+			.forEach(n -> System.out.println("세대: " + n + "대"));
+		System.out.println();
+		
+		// 예제2) DMI 지수 -> 몸무게(kg) / (키(m) * 키(m)) 구하기
+		// + 어제배운 filter를 이용해서 남자만 구하기
+		List<User> ulist = Data.getUserList();
+		ulist.stream()
+			.filter(user -> user.getGender() == 1)
+			.map(user -> (double)user.getWeight() / (user.getHeight() * user.getHeight()) * 10000)
+			// .filter(user -> user.getGender() == 1) // error
+			.forEach(bmi -> System.out.printf("%.1f\n", bmi));
+		// -> 이때 filter는 map의 다음에 못온다.(에러) : map의 user가 (double)형이므로 못옴
+		// -> 
+		
 	}
 
 	private static void m5() {
